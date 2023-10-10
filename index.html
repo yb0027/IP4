@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Order Form</title>
+</head>
+<body>
+    <form id="orderForm" onsubmit="return validateForm();" action="">
+        <fieldset>
+            <legend align="center"><h2>Enter Personal Details</h2></legend>
+            <label for="name">Name:&nbsp; &nbsp;</label>
+            <input type="text" id="name" name="name" required >
+            <br><br><br>
+            <label for="email">Email:&nbsp; &nbsp;</label>
+            <input type="email" id="email" name="email" required >
+            <br><br><br>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend align="center"><h2>Enter T-Shirt Details</h2></legend>
+            <label for="size">Size:&nbsp; &nbsp;</label>
+            <!-- Radio buttons for T-shirt size -->
+            <input type="radio" id="size_xs" name="size" value="XS" required>
+            <label for="size_xs">XS</label>
+            <input type="radio" id="size_s" name="size" value="S" required>
+            <label for="size_s">S</label>
+            <input type="radio" id="size_m" name="size" value="M" required>
+            <label for="size_m">M</label>
+            <input type="radio" id="size_l" name="size" value="L" required>
+            <label for="size_l">L</label>
+            <input type="radio" id="size_xl" name="size" value="XL" required>
+            <label for="size_xl">XL</label>
+            <!-- Add more size options as needed -->
+            <br><br>
+            
+            <label for="color">T-Shirt Color: &nbsp; &nbsp;</label>
+            <input type="color" id="color" name="color" required>
+            <br><br><br>
+            
+            <label for="text">Custom Text:&nbsp; &nbsp;</label>
+            <input type="text" id="text" name="text" maxlength="50" required>
+            <br><br><br>
+            
+            <label for="image">Custom Image:&nbsp; &nbsp;</label>
+            <input type="file" id="image" name="image">
+            <br><br><br>
+            
+            <label for="quantity">Quantity:&nbsp; &nbsp;</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+            <br><br><br>
+            
+            <label for="delivery_date">Preferred Delivery Date:&nbsp; &nbsp;</label>
+            <input type="date" id="delivery_date" name="delivery_date" required>
+            <br><br><br>
+            
+            <label for="special_instructions">Special Instructions:&nbsp; &nbsp;</label>
+            <textarea id="special_instructions" name="special_instructions" rows="4"></textarea>
+            <br><br><br>
+        </fieldset>
+        <hr>
+        <br>
+        <input type="submit" value="Place Order">
+        <br><br>
+    </form>
+
+    <div id="receipt" style="display: none;">
+        <h2>Order Receipt</h2>
+        <p>Date of Receipt: <span id="receiptDate"></span></p>
+        <p>Name: <span id="receiptName"></span></p>
+        <p>Email: <span id="receiptEmail"></span></p>
+        <p>T-Shirt Size: <span id="receiptSize"></span></p>
+        <p>T-Shirt Color: <span id="receiptColor"></span></p>
+        <p>Custom Text: <span id="receiptText"></span></p>
+        <p>Quantity: <span id="receiptQuantity"></span></p>
+        <p>Preferred Delivery Date: <span id="receiptDeliveryDate"></span></p>
+        <p>Special Instructions: <span id="receiptSpecialInstructions"></span></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Validation code goes here
+            // You can add custom validation rules, e.g., checking character limits and other conditions
+            
+            // Example: Check if the custom text has more than 50 characters
+            const textInput = document.getElementById("text");
+            if (textInput.value.length > 50) {
+                alert("Custom text should not exceed 50 characters.");
+                return false;
+            }
+
+            // Validation for other fields can be added similarly
+
+            // If all validations pass, show the receipt
+            showReceipt();
+            return false; // Prevent the form from actually submitting
+        }
+
+        function showReceipt() {
+            // Populate receipt data
+            const receiptDate = new Date().toLocaleDateString();
+            document.getElementById("receiptDate").textContent = receiptDate;
+            document.getElementById("receiptName").textContent = document.getElementById("name").value;
+            document.getElementById("receiptEmail").textContent = document.getElementById("email").value;
+            document.getElementById("receiptSize").textContent = document.querySelector('input[name="size"]:checked').value;
+            document.getElementById("receiptColor").textContent = document.getElementById("color").value;
+            document.getElementById("receiptText").textContent = document.getElementById("text").value;
+            document.getElementById("receiptQuantity").textContent = document.getElementById("quantity").value;
+            document.getElementById("receiptDeliveryDate").textContent = document.getElementById("delivery_date").value;
+            document.getElementById("receiptSpecialInstructions").textContent = document.getElementById("special_instructions").value;
+
+            // Show the receipt and hide the form
+            document.getElementById("receipt").style.display = "block";
+            document.getElementById("orderForm").style.display = "none";
+        }
+    </script>
+</body>
+</html>
